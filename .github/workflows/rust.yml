@@ -13,11 +13,14 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    name: Rust project
     steps:
-    # - uses: actions/checkout@v2
-    - name: rust-toolchain
-      uses: actions-rs/toolchain@v1.0.6
+      - uses: actions/checkout@v2
+      - name: Install latest nightly
+        uses: actions-rs/toolchain@v1
+        with:
+            toolchain: nightly
+
     - name: Build
       run: cargo build --verbose
     - name: Run tests
