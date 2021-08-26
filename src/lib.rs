@@ -19,8 +19,9 @@ impl Point {
     /// ```
     /// let p = rsgeo::Point{x: 1.0, y: 1.0};
     /// let a = p.angle();
-    /// assert_eq!(a, std::f64::consts::PI)
+    /// assert_eq!(a, std::f64::consts::PI / 4.0)
     /// ```
+    #[must_use]
     pub fn angle(&self) -> f64 {
         self.y.atan2(self.x)
     }
@@ -52,6 +53,12 @@ impl Point {
     }
 
     /// rotate will rotate the point about the origin.
+    /// ```
+    /// let p = rsgeo::Point{x: 1.0, y: 1.0};
+    /// // Rotate by 45 degrees (pi/4 rad)
+    /// let result = p.rotate(std::f64::consts::PI / 4.0);
+    /// assert!(result.isclose(rsgeo::Point{x: 0.0, y: 2.0_f64.sqrt()}))
+    ///```
     pub fn rotate(&self, angle: f64) -> Point {
         let s = angle.sin();
         let c = angle.cos();
@@ -96,6 +103,13 @@ impl Point {
 impl Add for Point {
     type Output = Self;
 
+    /// Add the x and y components of two points
+    /// ```
+    /// let p = rsgeo::Point{x: 3.0, y: 3.0};
+    /// let q = rsgeo::Point{x: 1.0, y: 2.0};
+    /// let result = p + q;
+    /// assert_eq!(result, rsgeo::Point{x: 4.0, y: 5.0})
+    ///```
     fn add(self, rhs: Self) -> Self::Output {
         Self {
             x: self.x + rhs.x,
@@ -107,6 +121,13 @@ impl Add for Point {
 impl Sub for Point {
     type Output = Self;
 
+    /// Subtract the x and y components of two points
+    /// ```
+    /// let p = rsgeo::Point{x: 3.0, y: 3.0};
+    /// let q = rsgeo::Point{x: 1.0, y: 2.0};
+    /// let result = p - q;
+    /// assert_eq!(result, rsgeo::Point{x: 2.0, y: 1.0})
+    ///```
     fn sub(self, rhs: Self) -> Self::Output {
         Self {
             x: self.x - rhs.x,
